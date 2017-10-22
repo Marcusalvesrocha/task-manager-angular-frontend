@@ -1,4 +1,5 @@
-export class Task{
+export class Task {
+
     public id: number;
     public title: string;
   
@@ -6,5 +7,5 @@ export class Task{
       this.id = id;
       this.title = title
     }
-  }
+}
   
