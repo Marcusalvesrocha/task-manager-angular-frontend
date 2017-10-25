@@ -6,7 +6,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let task of tasks">
-      <td>{{task.title}}</td>
+      <td><a [routerLink]="['/tasks', task.id]">{{task.title}}</a></td>
     </tr>
   </tbody>
 </table>
