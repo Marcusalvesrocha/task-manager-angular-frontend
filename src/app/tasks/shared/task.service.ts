@@ -36,6 +36,6 @@ export class TaskService {
   }
 
   public getTask(id: number){
-    return this.getImportantTasks().then(tasks => tasks.find(task => task.id === id));
+    return this.getTasks().then(tasks => tasks.find(task => task.id === id));
   }
 }
