@@ -17,7 +17,8 @@ const TASKS: Array<Task> = [
 
 export class TaskService {
 
-  public getTasks() {
+  public getTasks(): Promise<Task[]> {
+
     let promise = new Promise((resolve, reject) => {
       if (TASKS.length > 0) {
         resolve(TASKS);
@@ -26,10 +27,15 @@ export class TaskService {
         reject(error_msg);
       }
     });
-    return promise;
+
+    return Promise.resolve(TASKS);
   }
 
   public getImportantTasks(): Promise<Task[]> {
     return Promise.resolve(TASKS.slice(1,4));
+  }
+
+  public getTask(id: number){
+    return this.getImportantTasks().then(tasks => tasks.find(task => task.id === id));
   }
 }
