@@ -1,25 +1,27 @@
-<h1>Listagem de Tarefas</h1>
+<h1 class="page-header">Listagem de Tarefas</h1>
 <br>
 <table class="table">
-    <thead>
-        <th>ID</th>
-        <th>Título</th>
-        <th>Ações</th>       
-    </thead> 
-    <tbody>
-        <tr *ngFor="let task of tasks">
-            <td>{{task.id}}</td>
-            <td>{{task.title}}</td>
-            <td>
-                <a [routerLink]="['/tasks', task.id]" class="btn btn-info">
-                <span class="glyphicon glyphicon-info-sign"></span>  
-                    Detalhes
-                </a>
-                <button class="btn btn-danger">
-                    <span class="glyphicon glyphicon-trash"></span>
-                    Excluir
-                </button>
-            </td>
-        </tr>
-    </tbody> 
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Ações</th>   
+    </tr>    
+  </thead> 
+  <tbody>
+    <tr *ngFor="let task of tasks">
+      <td>{{task.id}}</td>
+      <td>{{task.title}}</td>
+      <td>
+        <a [routerLink]="['/tasks', task.id]" class="btn btn-info">
+        <span class="glyphicon glyphicon-info-sign"></span>  
+            Detalhes
+        </a>
+        <button class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash"></span>
+            Excluir
+        </button>
+      </td>
+    </tr>
+  </tbody> 
 </table>
