@@ -1,43 +1,40 @@
-import { HttpModule } from "@angular/http";
+import { Http, Response } from "@angular/http";
 import { Injectable } from "@angular/core";
 
-import { Task } from "./task.model";
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/operator/map";
 
-const TASKS: Array<Task> = [
-  {id: 1, title: 'Realizar entregas'},
-  {id: 2, title: 'Desenvolver componentes'},
-  {id: 3, title: 'Agendar reunião'},
-  {id: 4, title: 'Definir novos jobs'},
-  {id: 5, title: 'Implementar novo layout'},
-  {id: 6, title: 'Integrar novos modulos'},
-  {id: 7, title: 'Definir novos modulos'},
-];
+import { Task } from "./task.model";
 
 @Injectable()
 
 export class TaskService {
 
-  public constructor(private http: HttpModule){}
+  public tasksUrl = "api/tasks";
 
-  public getTasks(): Promise<Task[]> {
+  public constructor(private http: Http){}
 
-    let promise = new Promise((resolve, reject) => {
-      if (TASKS.length > 0) {
-        resolve(TASKS);
-      }else{
-        let error_msg = "Não há tarefas";
-        reject(error_msg);
-      }
-    });
+  public getTasks(): Observable<Task[]> {
 
-    return Promise.resolve(TASKS);
+    return this.http.get(this.tasksUrl)
+      .map((response: Response) => response.json() as Task[])
   }
 
-  public getImportantTasks(): Promise<Task[]> {
-    return Promise.resolve(TASKS.slice(1,4));
+  public getImportantTasks(): Observable<Task[]> {
+
+    return this.getTasks()
+      .map(
+        tasks => tasks.slice(0,4),
+        erro => alert("Não foi possível mostrar as tarefas, tente mais tarde")
+      )
+    //return Promise.resolve(TASKS.slice(1,4));
   }
 
-  public getTask(id: number){
-    return this.getTasks().then(tasks => tasks.find(task => task.id === id));
+  public getTask(id: number): Observable<Task>{
+
+    let url = `${this.tasksUrl}/${id}`;
+
+    return this.http.get(url)
+      .map((response: Response) => response.json() as Task)
   }
 }

@@ -17,7 +17,10 @@ export class DashboardComponent{
 
   public ngOnInit(){
     this.taskService.getImportantTasks()
-      .then(tasks => this.tasks = tasks)
-      .catch(erros => console.log(erros));
+      .subscribe(
+        tasks => this.tasks = tasks,
+        erros => console.log(erros)
+      );
+      
   }
 }
