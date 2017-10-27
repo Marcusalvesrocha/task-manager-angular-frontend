@@ -19,7 +19,7 @@ export class DashboardComponent{
     this.taskService.getImportantTasks()
       .subscribe(
         tasks => this.tasks = tasks,
-        erros => console.log(erros)
+        erros => alert("Não foi possível completar a operação, tente mais tarde")
       );
       
   }

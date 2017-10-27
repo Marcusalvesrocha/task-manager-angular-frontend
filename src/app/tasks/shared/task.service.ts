@@ -3,8 +3,8 @@ import { Injectable } from "@angular/core";
 
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch"
-import "rxjs/observable/throw"
+import "rxjs/add/operator/catch";
+import "rxjs/add/observable/throw";
 
 import { Task } from "./task.model";
 
@@ -12,7 +12,7 @@ import { Task } from "./task.model";
 
 export class TaskService {
 
-  public tasksUrl = "api/tassks";
+  public tasksUrl = "api/tasks";
 
   public constructor(private http: Http){}
 
@@ -26,6 +26,7 @@ export class TaskService {
   public getImportantTasks(): Observable<Task[]> {
 
     return this.getTasks()
+      .catch(this.handleErros)
       .map(
         tasks => tasks.slice(0,4),
         erro => alert("Não foi possível mostrar as tarefas, tente mais tarde")
@@ -38,6 +39,7 @@ export class TaskService {
     let url = `${this.tasksUrl}/${id}`;
 
     return this.http.get(url)
+      .catch(this.handleErros)
       .map((response: Response) => response.json() as Task)
   }
 
