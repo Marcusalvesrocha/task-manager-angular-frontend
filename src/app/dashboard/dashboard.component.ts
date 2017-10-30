@@ -16,7 +16,7 @@ export class DashboardComponent{
   }
 
   public ngOnInit(){
-    this.taskService.getImportantTasks()
+    this.taskService.getImportant()
       .subscribe(
         tasks => this.tasks = tasks,
         erros => alert("Não foi possível completar a operação, tente mais tarde")

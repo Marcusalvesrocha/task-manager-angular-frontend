@@ -24,7 +24,7 @@ export class TaskDetailComponent implements OnInit{
 
   public ngOnInit() {
     this.route.params
-      .switchMap((params: Params) => this.taskService.getTask(+params['id']))
+      .switchMap((params: Params) => this.taskService.getById(+params['id']))
       .subscribe(
         task => this.task = task,
         erros => alert("Não foi possível completar a operação, tente mais tarde")
@@ -39,7 +39,7 @@ export class TaskDetailComponent implements OnInit{
     if(!this.task.title){
       alert("Digite um título");
     } else {
-      this.taskService.updateTask(this.task)
+      this.taskService.update(this.task)
         .subscribe(
           () => alert('Tarefa atualizada com sucesso'),
           () => alert('Ocorreu um erro durante o processo, tente mais tarde')

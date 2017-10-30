@@ -13,19 +13,20 @@ import { Task } from "./task.model";
 export class TaskService {
 
   public tasksUrl = "api/tasks";
+  public headers = new Headers({'Content-type': 'application/json'});
 
   public constructor(private http: Http){}
 
-  public getTasks(): Observable<Task[]> {
+  public getAll(): Observable<Task[]> {
 
     return this.http.get(this.tasksUrl)
       .catch(this.handleErros)
       .map((response: Response) => response.json() as Task[])
   }
 
-  public getImportantTasks(): Observable<Task[]> {
+  public getImportant(): Observable<Task[]> {
 
-    return this.getTasks()
+    return this.getAll()
       .catch(this.handleErros)
       .map(
         tasks => tasks.slice(0,4),
@@ -34,7 +35,7 @@ export class TaskService {
     //return Promise.resolve(TASKS.slice(1,4));
   }
 
-  public getTask(id: number): Observable<Task>{
+  public getById(id: number): Observable<Task>{
 
     let url = `${this.tasksUrl}/${id}`;
 
@@ -43,32 +44,29 @@ export class TaskService {
       .map((response: Response) => response.json() as Task)
   }
 
-  public createTask(task: Task): Observable<Task> {
+  public create(task: Task): Observable<Task> {
     let url = this.tasksUrl;
     let body = JSON.stringify(task);
-    let headers = new Headers({'Content-type': 'application/json'});
 
-    return this.http.post(url, body, { headers })
+    return this.http.post(url, body, { headers: this.headers })
       .catch(this.handleErros)
       .map(response => response.json() as Task)
   }
 
-  public updateTask(task: Task): Observable<Task>{
+  public update(task: Task): Observable<Task>{
     
     let url = `${this.tasksUrl}/${task.id}`;
     let body = JSON.stringify(task);
-    let headers = new Headers({'Content-type': 'application/json'});
 
-    return this.http.put(url, body, { headers })
+    return this.http.put(url, body, { headers: this.headers })
       .catch(this.handleErros)
       .map(() => task)
   }
 
-  public deleteTask(id: number): Observable<null> {
+  public delete(id: number): Observable<null> {
     let url = `${this.tasksUrl}/${id}`;
-    let headers = new Headers({'Content-type': 'application/json'});
 
-    return this.http.delete(url, { headers })
+    return this.http.delete(url, { headers: this.headers })
       .catch(this.handleErros)
       .map(() => null)
   }
