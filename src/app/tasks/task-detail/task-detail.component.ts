@@ -33,7 +33,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
         erros => alert("Não foi possível completar a operação, tente mais tarde")
       )
   }
-  
+
   public ngAfterViewInit(){
     $("#deadline").datetimepicker({
       'sideBySide': true,
@@ -46,15 +46,11 @@ export class TaskDetailComponent implements OnInit, AfterViewInit{
   }
 
   public updateTask(){
-    if(!this.task.title){
-      alert("Digite um título");
-    } else {
-      this.taskService.update(this.task)
-        .subscribe(
-          () => alert('Tarefa atualizada com sucesso'),
-          () => alert('Ocorreu um erro durante o processo, tente mais tarde')
-        );
-    }
+    this.taskService.update(this.task)
+      .subscribe(
+        () => alert('Tarefa atualizada com sucesso'),
+        () => alert('Ocorreu um erro durante o processo, tente mais tarde')
+      );
   }
 
   public showFieldErrors(field) {

@@ -19,10 +19,10 @@ export class TasksComponent implements OnInit{
 
   public ngOnInit(){
     this.taskService.getAll()
-    .subscribe(
-      tasks => this.tasks = tasks,
-      error => alert("Não foi possível completar a operação, tente mais tarde")
-    )
+      .subscribe(
+        tasks => this.tasks = tasks.sort((a, b) => b.id - a.id),
+        error => alert("Não foi possível completar a operação, tente mais tarde")
+      )
   }
 
   public createTask(){
@@ -34,7 +34,7 @@ export class TasksComponent implements OnInit{
       this.taskService.create(this.newTask)
       .subscribe(
         task => {
-          this.tasks.push(task);
+          this.tasks.unshift(task);
           this.newTask = new Task(null, '');
           alert("Tarefa adicionada com sucesso");
         },
