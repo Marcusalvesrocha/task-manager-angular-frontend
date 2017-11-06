@@ -49,4 +49,8 @@ export class TaskDetailComponent implements OnInit{
     }
   }
 
+  public showFieldErrors(field) {
+    return field.invalid && (field.touched || field.dirty)
+  }
+
 }

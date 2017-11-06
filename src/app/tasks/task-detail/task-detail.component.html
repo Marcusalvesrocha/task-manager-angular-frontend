@@ -3,27 +3,31 @@
 <form #taskForm="ngForm" *ngIf="task">
   <div class="row">
 
-    <div class="form-group col-md-6" [class.has-error]="title.invalid && title.touched" [class.has-success]="title.valid">
+    <div class="form-group col-md-6" [class.has-error]="showFieldErrors(title)" [class.has-success]="title.valid">
       <label for="title" class="control-label">Título</label>
-      <input #title="ngModel" id="title" name="title" [(ngModel)]="task.title" type="text" class="form-control" required>
-      <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="title.valid" [class.glyphicon-remove]="title.invalid && title.touched" style="margin-right: 20px; margin-top: 25px"></span>
-      <div *ngIf="title.invalid && title.touched" class="text-danger">O título é obrigatório</div>
+      <input #title="ngModel" id="title" name="title" [(ngModel)]="task.title" type="text" class="form-control" required minlength="3" maxlength="15">
+      <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="title.valid" [class.glyphicon-remove]="showFieldErrors(title)" style="margin-right: 20px; margin-top: 25px"></span>
+      <div *ngIf="showFieldErrors(title)" class="text-danger">
+        <div *ngIf="title.errors.required">Título é obrigatório</div>
+        <div *ngIf="title.errors.minlength">Título deve ter no minimo 3 caracteres</div>
+        <div *ngIf="title.errors.maxlength">Título deve ter no máximo 15 caracteres</div>
+      </div>
     </div>
 
-    <div class="form-group col-md-3" [class.has-error]="deadline.invalid && deadline.touched" [class.has-success]="deadline.valid">
+    <div class="form-group col-md-3" [class.has-error]="showFieldErrors(deadline)" [class.has-success]="deadline.valid">
       <label for="done" class="control-label">Prazo de Entrega</label>
-      <input #deadline="ngModel" id="done" name="deadline" [(ngModel)]="task.deadline" type="text" class="form-control" required>
-      <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="deadline.valid" [class.glyphicon-remove]="deadline.invalid && deadline.touched" style="margin-right: 20px; margin-top: 25px"></span>
-      <div *ngIf="deadline.invalid && deadline.touched" class="text-danger">O prazo é obrigatório</div>
+      <input #deadline="ngModel" id="deadline" name="deadline" [(ngModel)]="task.deadline" type="text" class="form-control" required>
+      <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="deadline.valid" [class.glyphicon-remove]="showFieldErrors(deadline)" style="margin-right: 20px; margin-top: 25px"></span>
+      <div *ngIf="showFieldErrors(deadline)" class="text-danger">O prazo é obrigatório</div>
     </div>
 
-    <div class="form-group col-md-3" [class.has-error]="done.invalid && done.touched" [class.has-success]="done.valid">
+    <div class="form-group col-md-3" [class.has-error]="showFieldErrors(done)" [class.has-success]="done.valid">
       <label for="done" class="control-label">Situação</label>
       <select #done="ngModel" id="done" name="done" [(ngModel)]="task.done" type="text" class="form-control" required>
         <option *ngFor="let opt of taskDoneOptions" [value]="opt.value">{{opt.text}}</option>
       </select>
-      <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="done.valid" [class.glyphicon-remove]="done.invalid && done.touched" style="margin-right: 20px; margin-top: 25px"></span>
-      <div *ngIf="done.invalid && done.touched" class="text-danger">Situação obrigatória</div>
+      <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="done.valid" [class.glyphicon-remove]="showFieldErrors(done)" style="margin-right: 20px; margin-top: 25px"></span>
+      <div *ngIf="showFieldErrors(done)" class="text-danger">Situação obrigatória</div>
     </div>
 
   </div>
