@@ -1,6 +1,6 @@
-<h1 class="page-header">Detalhes da Tarefa: {{task?.title}} </h1>
+<h1 class="page-header">Detalhes da Tarefa: {{task.title}} </h1>
 
-<form #taskForm="ngForm" *ngIf="task">
+<form #taskForm="ngForm">
   <div class="row">
 
     <div class="form-group col-md-6" [class.has-error]="showFieldErrors(title)" [class.has-success]="title.valid">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="form-group col-md-3" [class.has-error]="showFieldErrors(deadline)" [class.has-success]="deadline.valid">
-      <label for="done" class="control-label">Prazo de Entrega</label>
+      <label for="deadline" class="control-label">Prazo de Entrega</label>
       <input #deadline="ngModel" id="deadline" name="deadline" [(ngModel)]="task.deadline" type="text" class="form-control" required>
       <span class="glyphicon form-control-feedback" [class.glyphicon-ok]="deadline.valid" [class.glyphicon-remove]="showFieldErrors(deadline)" style="margin-right: 20px; margin-top: 25px"></span>
       <div *ngIf="showFieldErrors(deadline)" class="text-danger">O prazo é obrigatório</div>
